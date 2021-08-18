@@ -6,22 +6,20 @@ This is a fork of the original [ORB_SLAM3](https://github.com/UZ-SLAMLab/ORB_SLA
 
 ## Windows Installation
 
-Before proceeding, please make sure you have installed all the [Prerequisites](#2-prerequisites) aswell as [CMake](https://cmake.org/). Pangolin currently needs a small fix for Windows, so use the version found [here](https://github.com/TriceHelix/Pangolin_WinFix). It is **essential** that every dependency is installed with static libs, since curently ORB_SLAM3_WIN only supports static linking. Detailed installation instructions for the dependencies on Windows will be added soon.
+Before proceeding, please make sure you have installed all the [Prerequisites](#2-prerequisites) aswell as [CMake](https://cmake.org/). Pangolin currently needs a small fix for Windows, so use the version found [here](https://github.com/TriceHelix/Pangolin_WinFix). It is essential all dependencies are built and installed as **static libraries**, since curently ORB_SLAM3_WIN only supports static linking. Detailed installation instructions for the dependencies on Windows will be added soon.
 ***
 
-Using a commandline like cmd.exe or PowerShell, navigate to your desired installation directory and execute the following commands:
+Building ORB_SLAM3_WIN is as easy as cloning this repository and invoking the build script. Using a CLI like cmd.exe or PowerShell, navigate to your desired installation directory and execute the following commands:
 ```
 git clone https://github.com/HelixVR/ORB_SLAM3_WIN.git
 cd ORB_SLAM3_WIN
-mkdir build && cd build
-cmake -DCMAKE_BUILD_TYPE=Release ..
-cmake --build --config Release
+call build.bat
 ```
-Currently the only supported configuration is `Release`. The commands may require elevated priviliges depending on where you install this software.
+*Note: The commands may require elevated priviliges depending on where you install this software. Currently the only supported configuration is `Release`. Use `call build_no_examples.bat` instead of `call build.bat` to build without examples.*
 
-Lastly, unzip the [Vocabulary File](../../blob/master/Vocabulary) using a tool like [7-Zip](https://www.7-zip.org/).
+The Vocabulary [Vocabulary File](../../blob/master/Vocabulary) will be unzipped automatically by the script using [7-Zip](https://www.7-zip.org/). If 7-Zip is not available, please extract the file manually.
 
-That's it! The resulting .lib file will be placed in the /lib folder at the top of the project. Example executables are placed in their respective categories in the [Examples](../../blob/master/Examples) directory.
+**That's it!** The resulting .lib file will be placed in the /lib folder at the top of the project. Example executables are placed in their respective categories in the [Examples](../../blob/master/Examples) directory.
 
 ***
 

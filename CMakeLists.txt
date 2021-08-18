@@ -3,6 +3,8 @@ cmake_policy(SET CMP0111 OLD)
 
 project(ORB_SLAM3 VERSION 0.4)
 
+option(BUILD_EXAMPLES "Build EuRoC and TUM-VI dataset examples" ON)
+
 # Default build type
 IF(NOT CMAKE_BUILD_TYPE)
   SET(CMAKE_BUILD_TYPE Release)
@@ -151,12 +153,9 @@ ${Boost_LIBRARIES}
 )
 
 # Add examples
-#add_subdirectory(Examples)
+message(STATUS "Building examples: ${BUILD_EXAMPLES}")
+if (BUILD_EXAMPLES)
+  add_subdirectory(Examples)
+endif()
 
-# Stereo-Inertial examples
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Stereo-Inertial)
-
-add_executable(stereo_inertial_euroc
-Examples/Stereo-Inertial/stereo_inertial_euroc.cc)
-target_link_libraries(stereo_inertial_euroc ${PROJECT_NAME})
-add_dependencies(stereo_inertial_euroc ${PROJECT_NAME})
+unset(BUILD_EXAMPLES CACHE)
