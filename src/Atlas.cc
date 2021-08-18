@@ -212,7 +212,7 @@ Map* Atlas::GetCurrentMap()
     if(!mpCurrentMap)
         CreateNewMap();
     while(mpCurrentMap->IsBad())
-        usleep(3000);
+        std::this_thread::sleep_for(3000us);
 
     return mpCurrentMap;
 }

@@ -20,10 +20,10 @@
 
 #include "System.h"
 #include "Converter.h"
+#include <chrono>
 #include <thread>
 #include <pangolin/pangolin.h>
 #include <iomanip>
-#include <openssl/md5.h>
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/string.hpp>
 #include <boost/archive/text_iarchive.hpp>
@@ -32,6 +32,8 @@
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
+
+using namespace std::chrono_literals;
 
 namespace ORB_SLAM3
 {
@@ -166,7 +168,7 @@ cv::Mat System::TrackStereo(const cv::Mat &imLeft, const cv::Mat &imRight, const
             // Wait until Local Mapping has effectively stopped
             while(!mpLocalMapper->isStopped())
             {
-                usleep(1000);
+                std::this_thread::sleep_for(1000us);
             }
 
             mpTracker->InformOnlyTracking(true);
@@ -229,7 +231,7 @@ cv::Mat System::TrackRGBD(const cv::Mat &im, const cv::Mat &depthmap, const doub
             // Wait until Local Mapping has effectively stopped
             while(!mpLocalMapper->isStopped())
             {
-                usleep(1000);
+                std::this_thread::sleep_for(1000us);
             }
 
             mpTracker->InformOnlyTracking(true);
@@ -287,7 +289,7 @@ cv::Mat System::TrackMonocular(const cv::Mat &im, const double &timestamp, const
             // Wait until Local Mapping has effectively stopped
             while(!mpLocalMapper->isStopped())
             {
-                usleep(1000);
+                std::this_thread::sleep_for(1000us);
             }
 
             mpTracker->InformOnlyTracking(true);
@@ -379,7 +381,7 @@ void System::Shutdown()
     {
         mpViewer->RequestFinish();
         while(!mpViewer->isFinished())
-            usleep(5000);
+            std::this_thread::sleep_for(1000us);
     }
 
     // Wait until all thread have effectively stopped
@@ -394,7 +396,7 @@ void System::Shutdown()
             cout << "break anyway..." << endl;
             break;
         }
-        usleep(5000);
+        std::this_thread::sleep_for(1000us);
     }
 
     if(mpViewer)

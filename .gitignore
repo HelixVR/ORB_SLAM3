@@ -1,6 +1,9 @@
 CMakeLists.txt.user
 CMakeLists_modified.txt
 
+Examples/*/Debug
+Examples/*/Release
+
 Examples/RGB-D/rgbd_tum
 
 Examples/Monocular/mono_euroc
@@ -18,28 +21,20 @@ Examples/Monocular-Inertial/mono_inertial_tum_vi
 Examples/Stereo-Inertial/stereo_inertial_euroc
 Examples/Stereo-Inertial/stereo_inertial_tum_vi
 
-Examples/ROS/ORB_SLAM3/Mono
-Examples/ROS/ORB_SLAM3/Mono_Inertial
-Examples/ROS/ORB_SLAM3/MonoAR
-Examples/ROS/ORB_SLAM3/RGBD
-Examples/ROS/ORB_SLAM3/Stereo
-Examples/ROS/ORB_SLAM3/Stereo_Inertial
-
-Examples/ROS/ORB_SLAM3/CMakeLists.txt.user
-Examples/ROS/ORB_SLAM3/build/
-
 KeyFrameTrajectory.txt
 CameraTrajectory.txt
 kf_*.txt
 f_*.txt
+
 Thirdparty/DBoW2/build/
 Thirdparty/DBoW2/lib/
 Thirdparty/g2o/build/
 Thirdparty/g2o/config.h
 Thirdparty/g2o/lib/
-Vocabulary/ORBvoc.txt
-build/
 
+Vocabulary/ORBvoc.txt
+
+build/
 lib/
 
 cmake_modules/
@@ -47,3 +42,8 @@ cmake-build-debug/
 
 *.pyc
 *.osa
+*.exe
+*.pdb
+*.lib
+*.obj
+*.exp

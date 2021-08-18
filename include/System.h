@@ -20,7 +20,8 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-#include <unistd.h>
+// TODO: find alternative and port code using it
+//#include <unistd.h>
 #include<stdio.h>
 #include<stdlib.h>
 #include<string>

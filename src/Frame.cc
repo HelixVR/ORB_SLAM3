@@ -394,15 +394,18 @@ void Frame::AssignFeaturesToGrid()
 
 
 
-    for(int i=0;i<N;i++)
+    for (int i = 0; i < N; i++)
     {
-        const cv::KeyPoint &kp = (Nleft == -1) ? mvKeysUn[i]
-                                                 : (i < Nleft) ? mvKeys[i]
-                                                                 : mvKeysRight[i - Nleft];
+        if (Nleft != -1 && i >= Nleft && i - Nleft >= mvKeysRight.size())
+            continue;
+
+        const cv::KeyPoint& kp = (Nleft == -1) ? mvKeysUn[i]
+            : (i < Nleft) ? mvKeys[i]
+            : mvKeysRight[i - Nleft];
 
         int nGridPosX, nGridPosY;
-        if(PosInGrid(kp,nGridPosX,nGridPosY)){
-            if(Nleft == -1 || i < Nleft)
+        if (PosInGrid(kp, nGridPosX, nGridPosY)) {
+            if (Nleft == -1 || i < Nleft)
                 mGrid[nGridPosX][nGridPosY].push_back(i);
             else
                 mGridRight[nGridPosX][nGridPosY].push_back(i - Nleft);

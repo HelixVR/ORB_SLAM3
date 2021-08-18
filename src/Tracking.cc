@@ -33,11 +33,13 @@
 
 #include <mutex>
 #include <chrono>
+#include <thread>
 #include <include/CameraModels/Pinhole.h>
 #include <include/CameraModels/KannalaBrandt8.h>
 #include <include/MLPnPsolver.h>
 
 using namespace std;
+using namespace std::chrono_literals;
 
 namespace ORB_SLAM3
 {
@@ -1439,7 +1441,7 @@ void Tracking::PreintegrateIMU()
             }
         }
         if(bSleep)
-            usleep(500);
+            std::this_thread::sleep_for(500us);
     }
 
 
@@ -1656,11 +1658,10 @@ void Tracking::ComputeVelocitiesAccBias(const vector<Frame*> &vpFs, float &bax, 
 
 void Tracking::Track()
 {
-
     if (bStepByStep)
     {
         while(!mbStep)
-            usleep(500);
+            std::this_thread::sleep_for(500us);
         mbStep = false;
     }
 
@@ -1711,7 +1712,6 @@ void Tracking::Track()
             return;
         }
     }
-
 
     if ((mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO) && mpLastKeyFrame)
         mCurrentFrame.SetNewBias(mpLastKeyFrame->GetImuBias());
@@ -3640,7 +3640,7 @@ void Tracking::Reset(bool bLocMap)
     {
         mpViewer->RequestStop();
         while(!mpViewer->isStopped())
-            usleep(3000);
+            std::this_thread::sleep_for(3000us);
     }
 
     // Reset Local Mapping
@@ -3704,7 +3704,7 @@ void Tracking::ResetActiveMap(bool bLocMap)
     {
         mpViewer->RequestStop();
         while(!mpViewer->isStopped())
-            usleep(3000);
+            std::this_thread::sleep_for(3000us);
     }
 
     Map* pMap = mpAtlas->GetCurrentMap();
@@ -3868,7 +3868,7 @@ void Tracking::UpdateFrameIMU(const float s, const IMU::Bias &b, KeyFrame* pCurr
 
     while(!mCurrentFrame.imuIsPreintegrated())
     {
-        usleep(500);
+        std::this_thread::sleep_for(500us);
     }
 
 
