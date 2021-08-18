@@ -22,7 +22,6 @@
 #include<fstream>
 #include<iomanip>
 #include<chrono>
-#include <unistd.h>
 
 #include<opencv2/core/core.hpp>
 
@@ -120,20 +119,12 @@ int main(int argc, char **argv)
                 return 1;
             }
 
-    #ifdef COMPILEDWITHC11
             std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
-    #else
-            std::chrono::monotonic_clock::time_point t1 = std::chrono::monotonic_clock::now();
-    #endif
 
             // Pass the image to the SLAM system
             SLAM.TrackStereo(imLeft,imRight,tframe);
 
-    #ifdef COMPILEDWITHC11
             std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
-    #else
-            std::chrono::monotonic_clock::time_point t2 = std::chrono::monotonic_clock::now();
-    #endif
 
             double ttrack= std::chrono::duration_cast<std::chrono::duration<double> >(t2 - t1).count();
             ttrack_tot += ttrack;
@@ -148,7 +139,7 @@ int main(int argc, char **argv)
                 T = tframe-vTimestampsCam[seq][ni-1];
 
             if(ttrack<T)
-                usleep((T-ttrack)*1e6);
+                std::this_thread::sleep_for((T-ttrack)*1e6ns);
         }
         if(seq < num_seq - 1)
         {

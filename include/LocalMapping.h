@@ -28,7 +28,7 @@
 #include "Initializer.h"
 
 #include <mutex>
-
+#include <opencv2/core/matx.hpp>
 
 namespace ORB_SLAM3
 {
