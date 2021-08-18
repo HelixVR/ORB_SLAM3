@@ -1,26 +1,6 @@
 CMakeLists.txt.user
 CMakeLists_modified.txt
 
-Examples/*/Debug
-Examples/*/Release
-
-Examples/RGB-D/rgbd_tum
-
-Examples/Monocular/mono_euroc
-Examples/Monocular/mono_kitti
-Examples/Monocular/mono_tum
-Examples/Monocular/mono_tum_vi
-
-Examples/Stereo/stereo_euroc
-Examples/Stereo/stereo_kitti
-Examples/Stereo/stereo_tum_vi
-
-Examples/Monocular-Inertial/mono_inertial_euroc
-Examples/Monocular-Inertial/mono_inertial_tum_vi
-
-Examples/Stereo-Inertial/stereo_inertial_euroc
-Examples/Stereo-Inertial/stereo_inertial_tum_vi
-
 KeyFrameTrajectory.txt
 CameraTrajectory.txt
 kf_*.txt

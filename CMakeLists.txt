@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.4)
 cmake_policy(SET CMP0111 OLD)
 
-project(ORB_SLAM3 VERSION 0.4)
+project(ORB_SLAM3_WIN VERSION 0.4)
 
 option(BUILD_EXAMPLES "Build EuRoC and TUM-VI dataset examples" ON)
 
@@ -79,8 +79,20 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 set(CMAKE_PDB_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
+foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
+    string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${PROJECT_SOURCE_DIR}/lib)
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${PROJECT_SOURCE_DIR}/lib)
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${PROJECT_SOURCE_DIR}/lib)
+endforeach(OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES)
 
-add_library(${PROJECT_NAME} STATIC
+# Set library name based on config (ONLY RELEASE CONFIG ACTUALLY SUPPORTED)
+set(MAINLIB ${PROJECT_NAME})
+if(${CMAKE_BUILD_TYPE} EQUAL "Debug")
+  set(MAINLIB ${MAINLIB}d)
+endif()
+
+add_library(${MAINLIB} STATIC
 $<TARGET_OBJECTS:DBoW2>
 $<TARGET_OBJECTS:g2o>
 src/System.cc
@@ -142,10 +154,10 @@ include/Config.h
 # Add DBoW2 and g2o
 add_subdirectory(Thirdparty/DBoW2)
 add_subdirectory(Thirdparty/g2o)
-add_dependencies(${PROJECT_NAME} DBoW2 g2o)
+add_dependencies(${MAINLIB} DBoW2 g2o)
 
 # Link against dependencies
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(${MAINLIB}
 ${OpenCV_LIBS}
 ${EIGEN3_LIBS}
 ${Pangolin_LIBRARIES}
