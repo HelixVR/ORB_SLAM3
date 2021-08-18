@@ -19,6 +19,8 @@ cmake --build --config Release
 ```
 Currently the only supported configuration is `Release`. The commands may require elevated priviliges depending on where you install this software.
 
+Lastly, unzip the [Vocabulary File](../../blob/master/Vocabulary) using a tool like [7-Zip](https://www.7-zip.org/).
+
 That's it! The resulting .lib file will be placed in the /lib folder at the top of the project. Example executables are placed in their respective categories in the [Examples](../../blob/master/Examples) directory.
 
 ***
