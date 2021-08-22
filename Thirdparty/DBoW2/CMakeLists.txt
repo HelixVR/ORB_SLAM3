@@ -1,8 +1,6 @@
-cmake_minimum_required(VERSION 2.8)
-project(DBoW2)
+cmake_minimum_required(VERSION 3.4)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wall  -O3 -march=native ")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall  -O3 -march=native")
+project(DBoW2)
 
 set(HDRS_DBOW2
   DBoW2/BowVector.h
@@ -26,15 +24,20 @@ set(SRCS_DUTILS
 
 find_package(OpenCV 4.0 QUIET)
 if(NOT OpenCV_FOUND)
-   find_package(OpenCV 3.0 QUIET)
-   if(NOT OpenCV_FOUND)
-      message(FATAL_ERROR "OpenCV > 3.0 not found.")
-   endif()
+  message(STATUS "OpenCV 4 not found, resorting to OpenCV 3.")
+  find_package(OpenCV 3.0 REQUIRED)
 endif()
 
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+find_package(Boost REQUIRED)
 
-include_directories(${OpenCV_INCLUDE_DIRS})
-add_library(DBoW2 SHARED ${SRCS_DBOW2} ${SRCS_DUTILS})
-target_link_libraries(DBoW2 ${OpenCV_LIBS})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
+set(CMAKE_PDB_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 
+include_directories(${OpenCV_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+
+add_library(DBoW2 OBJECT
+${SRCS_DBOW2}
+${SRCS_DUTILS}
+)

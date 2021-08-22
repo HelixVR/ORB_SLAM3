@@ -24,8 +24,11 @@
 #include "Converter.h"
 #include "Config.h"
 
-#include<mutex>
-#include<chrono>
+#include <mutex>
+#include <chrono>
+#include <thread>
+
+using namespace std::chrono_literals;
 
 namespace ORB_SLAM3
 {
@@ -266,7 +269,7 @@ void LocalMapping::Run()
             // Safe area to stop
             while(isStopped() && !CheckFinish())
             {
-                usleep(3000);
+                std::this_thread::sleep_for(3000us);
             }
             if(CheckFinish())
                 break;
@@ -280,7 +283,7 @@ void LocalMapping::Run()
         if(CheckFinish())
             break;
 
-        usleep(3000);
+        std::this_thread::sleep_for(3000us);
     }
 
     SetFinish();
@@ -625,7 +628,7 @@ void LocalMapping::CreateNewMapPoints()
                     continue;
 
                 // Euclidean coordinates
-                x3D = x3D_h.get_minor<3,1>(0,0) / x3D_h(3);
+                x3D = x3D_h.get_minor<3,1>(0,0) * (1 / x3D_h(3));
                 bEstimated = true;
 
             }
@@ -1161,7 +1164,7 @@ void LocalMapping::RequestReset()
             if(!mbResetRequested)
                 break;
         }
-        usleep(3000);
+        std::this_thread::sleep_for(3000us);
     }
     cout << "LM: Map reset, Done!!!" << endl;
 }
@@ -1183,7 +1186,7 @@ void LocalMapping::RequestResetActiveMap(Map* pMap)
             if(!mbResetRequestedActiveMap)
                 break;
         }
-        usleep(3000);
+        std::this_thread::sleep_for(3000us);
     }
     cout << "LM: Active map reset, Done!!!" << endl;
 }

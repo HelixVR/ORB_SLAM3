@@ -25,9 +25,11 @@
 #include "ORBmatcher.h"
 #include "G2oTypes.h"
 
-#include<mutex>
-#include<thread>
+#include <chrono>
+#include <mutex>
+#include <thread>
 
+using namespace std::chrono_literals;
 
 namespace ORB_SLAM3
 {
@@ -262,7 +264,7 @@ void LoopClosing::Run()
             break;
         }
 
-        usleep(5000);
+        std::this_thread::sleep_for(5000us);
     }
 
     SetFinish();
@@ -859,7 +861,7 @@ void LoopClosing::CorrectLoop()
     // Wait until Local Mapping has effectively stopped
     while(!mpLocalMapper->isStopped())
     {
-        usleep(1000);
+        std::this_thread::sleep_for(1000us);
     }
 
     // Ensure current keyframe is updated
@@ -1084,7 +1086,7 @@ void LoopClosing::MergeLocal()
     // Wait until Local Mapping has effectively stopped
     while(!mpLocalMapper->isStopped())
     {
-        usleep(1000);
+        std::this_thread::sleep_for(1000us);
     }
     Verbose::PrintMess("MERGE: Local Map stopped", Verbose::VERBOSITY_DEBUG);
 
@@ -1506,7 +1508,7 @@ void LoopClosing::MergeLocal()
         // Wait until Local Mapping has effectively stopped
         while(!mpLocalMapper->isStopped())
         {
-            usleep(1000);
+            std::this_thread::sleep_for(1000us);
         }
 
         // Optimize graph (and update the loop position for each element form the begining to the end)
@@ -1612,7 +1614,7 @@ void LoopClosing::MergeLocal2()
     // Wait until Local Mapping has effectively stopped
     while(!mpLocalMapper->isStopped())
     {
-        usleep(1000);
+        std::this_thread::sleep_for(1000us);
     }
     cout << "Local Map stopped" << endl;
 
@@ -1866,7 +1868,7 @@ void LoopClosing::RequestReset()
         if(!mbResetRequested)
             break;
         }
-        usleep(5000);
+        std::this_thread::sleep_for(5000us);
     }
 }
 
@@ -1885,7 +1887,7 @@ void LoopClosing::RequestResetActiveMap(Map *pMap)
             if(!mbResetActiveMapRequested)
                 break;
         }
-        usleep(3000);
+        std::this_thread::sleep_for(3000us);
     }
 }
 
@@ -1967,7 +1969,7 @@ void LoopClosing::RunGlobalBundleAdjustment(Map* pActiveMap, unsigned long nLoop
 
             while(!mpLocalMapper->isStopped() && !mpLocalMapper->isFinished())
             {
-                usleep(1000);
+                std::this_thread::sleep_for(1000us);
             }
 
             // Get Map Mutex
