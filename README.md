@@ -2,7 +2,7 @@
 
 ### ORB-SLAM3 for Windows
 
-This is a fork of the original [ORB_SLAM3](https://github.com/UZ-SLAMLab/ORB_SLAM3) made compatible with Windows. **Linux compatibility is currently broken, so only use this on Windows.**
+This is an **OUTDATED** fork of the original [ORB_SLAM3](https://github.com/UZ-SLAMLab/ORB_SLAM3) made compatible with Windows. **Linux compatibility is currently broken, so only use this on Windows.**
 
 ## Windows Installation
 
